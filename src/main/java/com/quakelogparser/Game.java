@@ -12,7 +12,8 @@ public class Game {
 	public Game() {
 	}
 
-	public Game(int total_kills, ArrayList<String> players, LinkedHashMap<String, Integer> kills) {
+	public Game(int total_kills, ArrayList<String> players, 
+			LinkedHashMap<String, Integer> kills) {
 		super();
 		this.total_kills = total_kills;
 		this.players = players;

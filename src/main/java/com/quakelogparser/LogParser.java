@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class LogParser {
 		String relevantLogs = filterLog(filePath);
 		ArrayList<String> listOfGames = separateByGame(relevantLogs);
 		
-		System.out.println(listOfGames.size() + " games found.\n");		
+		System.out.println(listOfGames.size() + " games found.\n");	
 	}
 	
 	/**
@@ -107,6 +108,80 @@ public class LogParser {
 			}
 		}
 		return listOfPlayers;
+	}
+	
+	/**
+     * Uses the kill information to get the killer player.
+     *
+     * @param String kill - A String containing a line from the log.
+     * @return A String, either containing "<world>" or an user name.
+     */
+	public static String identifyScoringPlayer(String kill) {
+		String relevantInfo = kill.split(":")[3].trim();
+		String scoringPlayer = relevantInfo.split("killed")[0].trim();
+		
+		return scoringPlayer;
+	}
+	
+	/**
+     * Uses the kill information to get the player who died.
+     *
+     * @param String kill - A String containing a line from the log.
+     * @return A String containing an user name.
+     */
+	public static String identifyVictim(String kill) {
+		String relevantInfo = kill.split(":")[3];
+		String victim = relevantInfo.split("killed")[1].split("by")[0].trim();
+		
+		return victim;
+	}
+
+	/**
+     * Uses the list of games to calculate the status for every game.
+     * 	Identifies who killed, who died and how many points each player scored.
+     *
+     * @param ArrayList<String> listOfGames - A list of Strings containing 
+     * 	information from all the games.
+     * @return A Linked HashMap (or dictionary). It's linked so it returns the
+     * 	games in the order they were stored. The keys contain the game number,
+     * 	and the values are objects of type Game.
+     */
+	public static LinkedHashMap<String, Game> calculateGameStats(ArrayList<String> listOfGames) {
+		ArrayList<String> listOfKills;
+		Game game;
+		LinkedHashMap<String, Game> gameStats = new LinkedHashMap<String, Game>();
+
+		for (String gameString : listOfGames) {
+			listOfKills = identifyKillsOnGame(gameString);
+			
+			int index = listOfGames.indexOf(gameString)+1;
+			int total_kills = listOfKills.size();
+			
+			ArrayList<String> players = identifyPlayersOnGame(gameString);
+			LinkedHashMap<String, Integer> kills = new LinkedHashMap<String, Integer>();
+			
+			for (String player : players) {
+				kills.put(player, 0);
+			}
+			
+			for (String kill : listOfKills) {
+				String scoringPlayer = identifyScoringPlayer(kill);
+				String victim = identifyVictim(kill);
+				
+				if (scoringPlayer.equals("<world>")) {
+					int victimScore = kills.get(victim);
+					kills.put(victim, victimScore-1);
+				}
+				else if (players.size() > 0) {
+					int score = kills.get(scoringPlayer);
+					kills.put(scoringPlayer, score+1);
+				}
+			}
+			
+			game = new Game(total_kills, players, kills);
+			gameStats.put("game_"+index ,game);
+		}
+		return gameStats;
 	}
 
 }
