@@ -10,9 +10,24 @@ public class LogParserTests {
 	LogParserActions actions;
 	
 	@Test
-	public void gameWithNoKills() {
+	public void verifyZeroTotalKillsOnGameWithNoKills() {
 		actions.verifyThereAreNoKillsOnGame1();
 	}
+	
+	@Test
+	public void verifyThereAreNoRepeatedPlayers() {};
+	
+	@Test
+	public void verifyTotalKillsCalculation() {}
+	
+	@Test
+	public void verifyKillsByMeansMatchesTotalKills() {}
+	
+	@Test
+	public void verifyPlayerRankingMatchesScoreSums() {}
+	
+	@Test
+	public void verifyPlayerRankingIsOnDescendingOrder() {}
 	
 	@BeforeMethod
 	public void beforeMethod() {
