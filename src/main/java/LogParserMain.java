@@ -4,7 +4,7 @@ public class LogParserMain {
 	
 	public static void main(String[] args) {
 		
-		LogParser.parseLog();
+		LogParser.parseLog(3);
 		
 	}
 
