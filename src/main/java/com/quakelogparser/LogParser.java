@@ -21,8 +21,17 @@ import com.google.gson.JsonParser;
  */
 public class LogParser {
 
-	static LinkedHashMap<String, Game> gameStats;
-	static LinkedHashMap<String, Integer> playerScores = new LinkedHashMap<String, Integer>();
+	private static LinkedHashMap<String, Game> gameStats;
+	private static LinkedHashMap<String, Integer> playerScores = 
+			new LinkedHashMap<String, Integer>();
+
+	public static LinkedHashMap<String, Game> getGameStats() {
+		return gameStats;
+	}
+
+	public static LinkedHashMap<String, Integer> getPlayerScores() {
+		return playerScores;
+	}
 
 	/**
 	 * Parses the log. This method calls the other methods and prints the result.
@@ -54,7 +63,7 @@ public class LogParser {
 	 * @param String filePath - The relative path to the qgames.log file.
 	 * @return A single String with the relevant information from the log.
 	 */
-	private static String filterLog(String filePath) {
+	protected static String filterLog(String filePath) {
 		StringBuilder relevantLogs = new StringBuilder();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -83,7 +92,7 @@ public class LogParser {
 	 * @return A list of Strings, each one containing information from a different
 	 *         game.
 	 */
-	private static ArrayList<String> separateByGame(String relevantLogs) {
+	protected static ArrayList<String> separateByGame(String relevantLogs) {
 		String[] gamesArray = relevantLogs.split("\\|");
 		List<String> list = Arrays.asList(gamesArray);
 		ArrayList<String> listOfGames = new ArrayList<String>(list);
@@ -98,7 +107,7 @@ public class LogParser {
 	 * @return A list of Strings, each one containing a line from the log where a
 	 *         kill was identified.
 	 */
-	public static ArrayList<String> identifyKillsOnGame(String game) {
+	protected static ArrayList<String> identifyKillsOnGame(String game) {
 		ArrayList<String> listOfKills = new ArrayList<String>();
 		String[] lines = game.split(",");
 
@@ -116,7 +125,7 @@ public class LogParser {
 	 * @param String game - A String containing information from a game.
 	 * @return A list of Strings, each one containing a player's user name.
 	 */
-	public static ArrayList<String> identifyPlayersOnGame(String game) {
+	protected static ArrayList<String> identifyPlayersOnGame(String game) {
 		ArrayList<String> listOfPlayers = new ArrayList<String>();
 		String[] lines = game.split(",");
 
@@ -137,7 +146,7 @@ public class LogParser {
 	 * @param String kill - A String containing a line from the log.
 	 * @return A String, either containing "<world>" or an user name.
 	 */
-	public static String identifyScoringPlayer(String kill) {
+	protected static String identifyScoringPlayer(String kill) {
 		String relevantInfo = kill.split(":")[3].trim();
 		String scoringPlayer = relevantInfo.split("killed")[0].trim();
 
@@ -150,7 +159,7 @@ public class LogParser {
 	 * @param String kill - A String containing a line from the log.
 	 * @return A String containing an user name.
 	 */
-	public static String identifyVictim(String kill) {
+	protected static String identifyVictim(String kill) {
 		String relevantInfo = kill.split(":")[3];
 		String victim = relevantInfo.split("killed")[1].split("by")[0].trim();
 
@@ -163,7 +172,7 @@ public class LogParser {
 	 * @param String kill - A String containing a line from the log.
 	 * @return A String containing the means of killing.
 	 */
-	public static String identifyMeansOfKilling(String kill) {
+	protected static String identifyMeansOfKilling(String kill) {
 		String relevantInfo = kill.split(":")[3];
 		String meansOfKilling = relevantInfo.split("killed")[1].split("by")[1].trim();
 
@@ -180,7 +189,7 @@ public class LogParser {
 	 *         in the order they were stored. The keys contain the game number, and
 	 *         the values are objects of type Game.
 	 */
-	public static LinkedHashMap<String, Game> calculateGameStats(ArrayList<String> listOfGames) {
+	protected static LinkedHashMap<String, Game> calculateGameStats(ArrayList<String> listOfGames) {
 		ArrayList<String> listOfKills;
 		Game game;
 		LinkedHashMap<String, Game> gameStats = new LinkedHashMap<String, Game>();
@@ -251,7 +260,7 @@ public class LogParser {
 	 * @return A single String containing all the relevant log information in Json
 	 *         format.
 	 */
-	public static String formatGameStats(LinkedHashMap<String, Game> gameStats) {
+	protected static String formatGameStats(LinkedHashMap<String, Game> gameStats) {
 		Gson gson = new Gson();
 		String stat = gson.toJson(gameStats);
 
@@ -270,7 +279,7 @@ public class LogParser {
 	 * @return A single String containing player user names and total scores in 
 	 * 		   Json format.
 	 */
-	public static String formatPlayerScores(LinkedHashMap<String, Integer> playerScores) {
+	protected static String formatPlayerScores(LinkedHashMap<String, Integer> playerScores) {
 		Gson gson = new Gson();
 		String scores = gson.toJson(playerScores);
 
@@ -287,7 +296,7 @@ public class LogParser {
 	 * @return A LinkedHashMap containing player user names and total scores in 
 	 * 		   descending order.
 	 */
-	public static LinkedHashMap<String, Integer> sortedPlayerScores() {
+	protected static LinkedHashMap<String, Integer> sortedPlayerScores() {
 		List<Map.Entry<String, Integer>> entries = new ArrayList<>(playerScores.entrySet());
 
 		Collections.sort(entries, (entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
