@@ -1,0 +1,9 @@
+<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Log Parser Suit">
+    <test name="Log Parser Tests">
+        <classes>
+            <class name="tests.LogParserTests"/>
+        </classes>
+    </test>
+</suite>
