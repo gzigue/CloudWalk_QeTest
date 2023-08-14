@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 /**
  * This class contains all the logic for the Log Parser. It reads the file,
  * 	process the information and returns it in a format the user can understand.
@@ -28,6 +33,9 @@ public class LogParser {
 		System.out.println(listOfGames.size() + " games found.\n");
 		
 		gameStats = calculateGameStats(listOfGames);
+		String formattedStats = formatGameStats(gameStats);
+		
+        System.out.println(formattedStats);
 	}
 	
 	/**
@@ -186,6 +194,26 @@ public class LogParser {
 			gameStats.put("game_"+index ,game);
 		}
 		return gameStats;
+	}
+	
+	/**
+     * Gets the game stats and formats it, so they can be printed in a 
+     * 	readable Json format.
+     *
+     * @param LinkedHashMap<String, Game> gameStats - A dictionary containing 
+     * 	the game numbers and the Game objects.
+     * @return A single String containing all the relevant log information
+     * 	in Json format.
+     */
+	public static String formatGameStats(LinkedHashMap<String, Game> gameStats) {
+		Gson gson = new Gson();
+		String stat = gson.toJson(gameStats);
+		
+		Gson newGson = new GsonBuilder().setPrettyPrinting().create();
+        JsonElement jsonElement = JsonParser.parseString(stat);
+        String prettyJson = newGson.toJson(jsonElement);
+        
+        return prettyJson;
 	}
 
 }
