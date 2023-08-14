@@ -12,22 +12,28 @@ public class LogParserTests {
 	@Test
 	public void verifyZeroTotalKillsOnGameWithNoKills() {
 		actions.verifyThereAreNoKillsOnGame1();
+		actions.verifyZeroTotalKillsOnGame1();
 	}
 	
 	@Test
-	public void verifyThereAreNoRepeatedPlayers() {};
+	public void verifyThereAreNoRepeatedPlayers() {
+		actions.checkAllGamesForDuplicatedPlayers();
+	};
 	
 	@Test
-	public void verifyTotalKillsCalculation() {}
+	public void verifyTotalKillsCalculation() {
+		actions.compareTotalKillsWithLogOnAllGames();
+	}
 	
 	@Test
-	public void verifyKillsByMeansMatchesTotalKills() {}
+	public void verifyKillsByMeansMatchesTotalKills() {
+		actions.compareKillsByMeansWithTotalKillsOnAllGames();
+	}
 	
 	@Test
-	public void verifyPlayerRankingMatchesScoreSums() {}
-	
-	@Test
-	public void verifyPlayerRankingIsOnDescendingOrder() {}
+	public void verifyPlayerRankingIsOnDescendingOrder() {
+		actions.checkIfRankingIsOnDescendingOrder();
+	}
 	
 	@BeforeMethod
 	public void beforeMethod() {
