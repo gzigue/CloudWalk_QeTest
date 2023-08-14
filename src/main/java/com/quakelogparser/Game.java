@@ -3,6 +3,10 @@ package com.quakelogparser;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * This class is for creating an object of type Game. It stores all the 
+ * 	necessary information for a given game.
+ */
 public class Game {
 
 	private int total_kills;
