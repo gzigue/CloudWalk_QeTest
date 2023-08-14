@@ -31,7 +31,9 @@ public class LogParserActions extends LogParser{
 	}
 	
 	public void verifyZeroTotalKillsOnGame1() {
-		Assert.assertEquals(getTotalKillsFromGame1(), 0);
+		Assert.assertEquals(getTotalKillsFromGame1(), 0, 
+				"The total number of kills on Game 1 should be 0, but is actually " +
+				getTotalKillsFromGame1());
 	}
 	
 	public void checkAllGamesForDuplicatedPlayers() {
@@ -43,12 +45,9 @@ public class LogParserActions extends LogParser{
 			ArrayList<String> players = game.getPlayers();
 			
 			Set<String> uniquePlayers = new HashSet<String>(players);
-			Assert.assertEquals(players.size(), uniquePlayers.size());
+			Assert.assertEquals(players.size(), uniquePlayers.size(),
+					"There is a duplicate player in " + gameName);
 		}
-	}
-
-	public void getNumberOfKillsFromLog(String game) {
-		
 	}
 	
 	public void compareTotalKillsWithLogOnAllGames() {
@@ -62,7 +61,8 @@ public class LogParserActions extends LogParser{
 			int numberOfKills = game.split("Kill:").length-1;
 			int totalKills = gameStats.get("game_"+index).getTotal_kills();
 			
-			Assert.assertEquals(numberOfKills, totalKills);
+			Assert.assertEquals(numberOfKills, totalKills,
+					"The total kills differs from log in game_"+index);
 			index++;
 		}
 	}
@@ -82,7 +82,8 @@ public class LogParserActions extends LogParser{
 			}
 			int totalKills = game.getTotal_kills();
 			
-			Assert.assertEquals(totalKillsByMeans, totalKills);
+			Assert.assertEquals(totalKillsByMeans, totalKills,
+					"Kills by Means is not being calculated correctly in " + gameName);
 		}
 	}
 	
@@ -98,7 +99,8 @@ public class LogParserActions extends LogParser{
 		for(String player : rankingSet) {
 			int score = playerRanking.get(player);
 			
-			Assert.assertTrue(score <= currentScore);
+			Assert.assertTrue(score <= currentScore, 
+					"Player Ranking is not in descending order");
 			
 			currentScore = score;
 		}
