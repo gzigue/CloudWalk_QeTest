@@ -11,17 +11,17 @@ public class LogParser {
 	
 	static String filePath;
 	
-	public static void logParser() {
+	public static void parseLog() {
 		filePath = "src\\main\\resources\\qgames.log";
 
-		String relevantLogs = logFilter(filePath);
+		String relevantLogs = filterLog(filePath);
 		ArrayList<String> listOfGames = separateByGame(relevantLogs);
 		
 		System.out.println(listOfGames.size() + " games found.\n");
 		
 	}
 	
-	public static String logFilter(String filePath) {
+	public static String filterLog(String filePath) {
 		StringBuilder relevantLogs = new StringBuilder();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
