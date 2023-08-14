@@ -12,15 +12,12 @@ import java.util.List;
  * 	process the information and returns it in a format the user can understand.
  */
 public class LogParser {
-	
-	static String filePath;
-	
+		
 	/**
      * Parses the log. This method calls the other methods and prints
      * 	the result.
      */
-	public static void parseLog(int index) {
-		filePath = "src\\main\\resources\\qgames.log";
+	public static void parseLog(String filePath, int index) {
 
 		String relevantLogs = filterLog(filePath);
 		ArrayList<String> listOfGames = separateByGame(relevantLogs);

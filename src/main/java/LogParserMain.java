@@ -4,7 +4,9 @@ public class LogParserMain {
 	
 	public static void main(String[] args) {
 		
-		LogParser.parseLog(3);
+		final String filePath = "src\\main\\resources\\qgames.log";
+		
+		LogParser.parseLog(filePath, 3);
 		
 	}
 
