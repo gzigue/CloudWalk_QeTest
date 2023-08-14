@@ -195,6 +195,8 @@ public class LogParser {
 			LinkedHashMap<String, Integer> kills = new LinkedHashMap<String, Integer>();
 			LinkedHashMap<String, Integer> kills_by_means = new LinkedHashMap<String, Integer>();
 
+			// Creating a list of players for the game and initializing 
+			// their scores
 			for (String player : players) {
 				kills.put(player, 0);
 				if (!playerScores.containsKey(player)) {
@@ -202,11 +204,13 @@ public class LogParser {
 				}
 			}
 
+			// Looping through every kill in the game to get the stats
 			for (String kill : listOfKills) {
 				String scoringPlayer = identifyScoringPlayer(kill);
 				String victim = identifyVictim(kill);
 				String meansOfKilling = identifyMeansOfKilling(kill);
 
+				// Adding and subtracting scores 
 				if (scoringPlayer.equals("<world>")) {
 					int victimScore = kills.get(victim);
 					kills.put(victim, victimScore - 1);
@@ -221,6 +225,7 @@ public class LogParser {
 					playerScores.put(scoringPlayer, totalScore + 1);
 				}
 				
+				// Getting the statistics for the means of killing
 				if (!kills_by_means.containsKey(meansOfKilling)) {
 					kills_by_means.put(meansOfKilling, 1);
 				}
@@ -230,6 +235,7 @@ public class LogParser {
 				}
 			}
 
+			// Creating the Game object and adding it to the game stats
 			game = new Game(total_kills, players, kills, kills_by_means);
 			gameStats.put("game_" + index, game);
 		}
