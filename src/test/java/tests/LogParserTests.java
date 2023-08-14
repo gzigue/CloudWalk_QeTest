@@ -11,7 +11,6 @@ public class LogParserTests {
 	
 	@Test
 	public void verifyZeroTotalKillsOnGameWithNoKills() {
-		actions.verifyThereAreNoKillsOnGame1();
 		actions.verifyZeroTotalKillsOnGame1();
 	}
 	

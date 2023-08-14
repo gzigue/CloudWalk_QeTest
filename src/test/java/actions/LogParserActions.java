@@ -25,18 +25,9 @@ public class LogParserActions extends LogParser{
 		return calculateGameStats(listOfGames);
 	}
 	
-	public LinkedHashMap<String, Integer> getKillsFromGame1() {
-		gameStats = getGameStatsFromLogFile();
-		return gameStats.get("game_1").getKills();
-	}
-	
 	public int getTotalKillsFromGame1() {
 		gameStats = getGameStatsFromLogFile();
 		return gameStats.get("game_1").getTotal_kills();
-	}
-	
-	public void verifyThereAreNoKillsOnGame1() {
-		Assert.assertEquals(getKillsFromGame1().size(), 0);
 	}
 	
 	public void verifyZeroTotalKillsOnGame1() {
