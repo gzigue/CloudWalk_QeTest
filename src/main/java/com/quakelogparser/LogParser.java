@@ -156,6 +156,19 @@ public class LogParser {
 
 		return victim;
 	}
+	
+	/**
+	 * Uses the kill information to get the means of killing.
+	 *
+	 * @param String kill - A String containing a line from the log.
+	 * @return A String containing the means of killing.
+	 */
+	public static String identifyMeansOfKilling(String kill) {
+		String relevantInfo = kill.split(":")[3];
+		String meansOfKilling = relevantInfo.split("killed")[1].split("by")[1].trim();
+
+		return meansOfKilling;
+	}
 
 	/**
 	 * Uses the list of games to calculate the status for every game. Identifies who
@@ -180,6 +193,7 @@ public class LogParser {
 
 			ArrayList<String> players = identifyPlayersOnGame(gameString);
 			LinkedHashMap<String, Integer> kills = new LinkedHashMap<String, Integer>();
+			LinkedHashMap<String, Integer> kills_by_means = new LinkedHashMap<String, Integer>();
 
 			for (String player : players) {
 				kills.put(player, 0);
@@ -191,6 +205,7 @@ public class LogParser {
 			for (String kill : listOfKills) {
 				String scoringPlayer = identifyScoringPlayer(kill);
 				String victim = identifyVictim(kill);
+				String meansOfKilling = identifyMeansOfKilling(kill);
 
 				if (scoringPlayer.equals("<world>")) {
 					int victimScore = kills.get(victim);
@@ -205,9 +220,17 @@ public class LogParser {
 					int totalScore = playerScores.get(scoringPlayer);
 					playerScores.put(scoringPlayer, totalScore + 1);
 				}
+				
+				if (!kills_by_means.containsKey(meansOfKilling)) {
+					kills_by_means.put(meansOfKilling, 1);
+				}
+				else {
+					int meansCounter = kills_by_means.get(meansOfKilling);
+					kills_by_means.put(meansOfKilling, meansCounter+1);
+				}
 			}
 
-			game = new Game(total_kills, players, kills);
+			game = new Game(total_kills, players, kills, kills_by_means);
 			gameStats.put("game_" + index, game);
 		}
 		return gameStats;
