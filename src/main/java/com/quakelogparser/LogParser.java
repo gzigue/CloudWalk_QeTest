@@ -13,7 +13,15 @@ public class LogParser {
 	
 	public static void logParser() {
 		filePath = "src\\main\\resources\\qgames.log";
+
+		String relevantLogs = logFilter(filePath);
+		ArrayList<String> listOfGames = separateByGame(relevantLogs);
 		
+		System.out.println(listOfGames.size() + " games found.\n");
+		
+	}
+	
+	public static String logFilter(String filePath) {
 		StringBuilder relevantLogs = new StringBuilder();
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -30,14 +38,17 @@ public class LogParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		String[] gamesArray = relevantLogs.toString().split("\\|");
+
+		return relevantLogs.toString();
+	}
+
+	public static ArrayList<String> separateByGame(String relevantLogs) {
+		String[] gamesArray = relevantLogs.split("\\|");
 		List<String> list = Arrays.asList(gamesArray);
-		
 		ArrayList<String> listOfGames = new ArrayList<String>(list);
 		listOfGames.remove(0);
-		
-		System.out.println(listOfGames.size() + " games found.\n");
-		
+
+		return listOfGames;
 	}
+
 }
