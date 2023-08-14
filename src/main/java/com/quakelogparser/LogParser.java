@@ -7,10 +7,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class contains all the logic for the Log Parser. It reads the file,
+ * 	process the information and returns it in a format the user can understand.
+ */
 public class LogParser {
 	
 	static String filePath;
 	
+	/**
+     * Parses the log. This method calls the other methods and prints
+     * 	the result.
+     */
 	public static void parseLog(int index) {
 		filePath = "src\\main\\resources\\qgames.log";
 
@@ -27,6 +35,13 @@ public class LogParser {
 		
 	}
 	
+	/**
+     * Filters the log, removing the unnecessary lines and adding the rest
+     * 	to a single String.
+     *
+     * @param String filePath - The relative path to the qgames.log file.
+     * @return A single String with the relevant information from the log.
+     */
 	private static String filterLog(String filePath) {
 		StringBuilder relevantLogs = new StringBuilder();
 
@@ -47,6 +62,15 @@ public class LogParser {
 		return relevantLogs.toString();
 	}
 
+	/**
+     * Gets the relevant information from the log and separates it game by
+     * 	game, on a list.
+     *
+     * @param String relevantLogs - A single String containing the relevant
+     * 	information from the log.
+     * @return A list of Strings, each one containing information from a 
+     * 	different game.
+     */
 	private static ArrayList<String> separateByGame(String relevantLogs) {
 		String[] gamesArray = relevantLogs.split("\\|");
 		List<String> list = Arrays.asList(gamesArray);
@@ -55,6 +79,13 @@ public class LogParser {
 		return listOfGames;
 	}
 	
+	/**
+     * Uses the game information to identify the kills.
+     *
+     * @param String game - A String containing information from a game.
+     * @return A list of Strings, each one containing a line from the log
+     * 	where a kill was identified.
+     */
 	public static ArrayList<String> identifyKillsOnGame(String game) {
 		ArrayList<String> listOfKills = new ArrayList<String>();
 		String[] lines = game.split(",");
@@ -67,6 +98,12 @@ public class LogParser {
 		return listOfKills;
 	}
 	
+	/**
+     * Uses the game information to get a list of players.
+     *
+     * @param String game - A String containing information from a game.
+     * @return A list of Strings, each one containing a player's user name.
+     */
 	public static ArrayList<String> identifyPlayersOnGame(String game) {
 		ArrayList<String> listOfPlayers = new ArrayList<String>();
 		String[] lines = game.split(",");
