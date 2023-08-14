@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class LogParser {
 		
+	static LinkedHashMap<String, Game> gameStats;
+	
 	/**
      * Parses the log. This method calls the other methods and prints
      * 	the result.
@@ -23,7 +25,9 @@ public class LogParser {
 		String relevantLogs = filterLog(filePath);
 		ArrayList<String> listOfGames = separateByGame(relevantLogs);
 		
-		System.out.println(listOfGames.size() + " games found.\n");	
+		System.out.println(listOfGames.size() + " games found.\n");
+		
+		gameStats = calculateGameStats(listOfGames);
 	}
 	
 	/**
