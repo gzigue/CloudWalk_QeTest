@@ -6,7 +6,7 @@ public class LogParserMain {
 		
 		final String filePath = "src\\main\\resources\\qgames.log";
 		
-		LogParser.parseLog(filePath, 3);
+		LogParser.parseLog(filePath);
 		
 	}
 

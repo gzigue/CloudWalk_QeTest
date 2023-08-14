@@ -17,19 +17,12 @@ public class LogParser {
      * Parses the log. This method calls the other methods and prints
      * 	the result.
      */
-	public static void parseLog(String filePath, int index) {
+	public static void parseLog(String filePath) {
 
 		String relevantLogs = filterLog(filePath);
 		ArrayList<String> listOfGames = separateByGame(relevantLogs);
 		
-		System.out.println(listOfGames.size() + " games found.\n");
-		
-		ArrayList<String> listOfPlayers = identifyPlayersOnGame(listOfGames.get(index));
-		ArrayList<String> listOfKills = identifyKillsOnGame(listOfGames.get(index));
-		
-		System.out.println("Players on game " + index + ": " + listOfPlayers);
-		System.out.println("Kills on game " + index + ": " + listOfKills);
-		
+		System.out.println(listOfGames.size() + " games found.\n");		
 	}
 	
 	/**
